@@ -27,7 +27,7 @@ web:
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
-disk: 8192
+disk: 10240
 
 mounts:
   # Cache local build artifacts
