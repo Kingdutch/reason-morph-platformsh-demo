@@ -6,6 +6,8 @@ name: open-social-chatserver
 
 # The type of the application to build.
 type: nodejs:14
+build:
+  flavor: none
 dependencies:
   nodejs:
     esy: '^0.6.6'
