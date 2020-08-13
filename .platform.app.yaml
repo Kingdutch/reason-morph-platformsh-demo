@@ -27,10 +27,20 @@ web:
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
-disk: 5120
+disk: 8192
+
+mounts:
+  # Cache local build artifacts
+  '.esy':
+    source: local
+    source_path: esy
 
 # The hooks that will be performed when the package is deployed.
 hooks:
+    # Clear out previous large build artifacts (but not cached dependencies).
+    # Then install all needed things and build it.
     build: |
+        set -e
+        rm -rf /app/.esy/3/b
         esy install
         esy build
