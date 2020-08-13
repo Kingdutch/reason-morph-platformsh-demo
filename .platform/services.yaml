@@ -1,4 +1,4 @@
-mysqldb:
-    type: mysql:10.2
-    disk: 1024
+# mysqldb:
+#     type: mysql:10.2
+#     disk: 1024
     
