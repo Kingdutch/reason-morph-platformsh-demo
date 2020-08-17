@@ -31,7 +31,7 @@ disk: 5120
 
 mounts:
   # Cache local build artifacts
-  '.esy':
+  '/.esy':
     source: local
     source_path: esy
 
