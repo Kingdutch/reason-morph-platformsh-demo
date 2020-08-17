@@ -31,7 +31,10 @@
       ],
       "bin": {
         "RunMorphPlaygroundTests.exe": "RunMorphPlaygroundTests.re"
-      }
+      },
+      "rawBuildConfigFooter": [
+        "(env (platformsh (flags (:standard -ccopt -static))))"
+      ]
     },
     "library": {
       "imports": [

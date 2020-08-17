@@ -10,8 +10,8 @@ build:
   flavor: none
 dependencies:
   nodejs:
-    esy: '^0.6.6'
-    pesy: '0.5.0-alpha.20'
+    esy: "^0.6.6"
+    pesy: "0.5.0-alpha.20"
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
@@ -23,7 +23,7 @@ dependencies:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-    start: env $(cat .env | xargs -d '\n') _esy/default/build/install/default/bin/MorphPlaygroundApp.exe
+    start: main.exe
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
@@ -31,22 +31,22 @@ disk: 5120
 
 mounts:
   # Cache local build artifacts
-  '.esy':
+  ".esy":
     source: local
     source_path: esy
 
 # The hooks that will be performed when the package is deployed.
 hooks:
-    # Clear out previous large build artifacts (but not cached dependencies).
-    # Remove the previous binary and start a background task to keep build
-    # artifacts clean when no longer needed. This should fix disk space issues
-    # during build time.
-    # Then install all needed things and build it.
-    build: |
-        set -e
-        rm -rf /app/.esy/3/b
-        rm -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe"
-        while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
-        esy install
-        esy build
-        esy sh -c set > .env
+  # Clear out previous large build artifacts (but not cached dependencies).
+  # Remove the previous binary and start a background task to keep build
+  # artifacts clean when no longer needed. This should fix disk space issues
+  # during build time.
+  # Then install all needed things and build it.
+  build: |
+    set -e
+    rm -rf /app/.esy/3/b
+    rm -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe"
+    while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
+    esy install
+    esy dune build --profile=platformsh --release
+    esy mv "#{self.target_dir / 'default' / 'executable' / 'MorphOidcClient.exe'}" main.exe
