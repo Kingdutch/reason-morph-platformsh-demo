@@ -23,7 +23,7 @@ dependencies:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-    start: 'esy start'
+    start: '_esy/default/build/install/default/bin/MorphPlaygroundApp.exe'
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
@@ -34,6 +34,10 @@ mounts:
   '.esy':
     source: local
     source_path: esy
+  # Allow esy to write to its cache during runtime
+  '_esy/default/cache':
+    source: local
+    source_path: esy_cache
 
 # The hooks that will be performed when the package is deployed.
 hooks:
