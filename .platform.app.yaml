@@ -48,5 +48,5 @@ hooks:
     rm -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe"
     while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
     esy install
-    esy dune build --profile=platformsh --release
+    esy dune build --profile=platformsh --release || (mkdir -p _esy/default/build/install/default/bin && touch _esy/default/build/install/default/bin/MorphPlaygroundApp.exe && exit 1)
     esy mv "#{self.target_dir / 'default' / 'executable' / 'MorphPlaygroundApp.exe'}" main.exe
