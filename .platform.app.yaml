@@ -23,7 +23,7 @@ dependencies:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-    start: env $(cat .env | xargs -d '\n') _esy/default/build/install/default/bin/MorphPlaygroundApp.exe
+    start: esy start
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
@@ -34,6 +34,10 @@ mounts:
   '/.esy':
     source: local
     source_path: esy
+  # Make esy home folder writable so the app can start
+  "_esy":
+    source: local
+    source_path: esy_home
 
 # The hooks that will be performed when the package is deployed.
 hooks:
@@ -51,4 +55,3 @@ hooks:
         while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
         esy install
         esy build
-        esy sh -c set | grep -E '^(CAML_LD_LIBRARY_PATH|OCAML|ODOC_SYNTAX|OPENSSL|DUNE_|ESY|cur\_\_)' > .env
