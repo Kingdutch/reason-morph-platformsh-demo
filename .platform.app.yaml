@@ -23,7 +23,7 @@ dependencies:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-    start: esy start
+    start: sleep 1000000
 
 # The size of the persistent disk of the application (in MB).
 # esy requires a lot of disk space in /app/.esy so we provide it.
@@ -54,4 +54,4 @@ hooks:
         rm -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe"
         while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
         esy install
-        esy build
+        esy release

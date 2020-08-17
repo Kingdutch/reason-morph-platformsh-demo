@@ -6,6 +6,11 @@
     "build": "refmterr dune build -p #{self.name}",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
+    },
+    "release": {
+      "bin": [
+        "MorphPlaygroundApp.exe"
+      ]
     }
   },
   "pesy": {
