@@ -15,7 +15,8 @@
       "includePackages": [
         "root",
         "@reason-native-web/esy-openssl"
-      ]
+      ],
+      "rewritePrefix": true
     }
   },
   "pesy": {
