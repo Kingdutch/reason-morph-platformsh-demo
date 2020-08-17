@@ -42,6 +42,8 @@ hooks:
     # artifacts clean when no longer needed. This should fix disk space issues
     # during build time.
     # Then install all needed things and build it.
+    # Finally store the environment variables that esy would set for us so we don't
+    # need to run esy during runtime (the tool tries to write to disk in many places).
     build: |
         set -e
         rm -rf /app/.esy/3/b
@@ -49,4 +51,4 @@ hooks:
         while [ ! -f "_esy/default/build/install/default/bin/MorphPlaygroundApp.exe" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
         esy install
         esy build
-        esy sh -c set > .env
+        esy sh -c set | grep -E '^(CAML_LD_LIBRARY_PATH|OCAML|ODOC_SYNTAX|OPENSSL|DUNE_|ESY|cur\_\_)' > .env
