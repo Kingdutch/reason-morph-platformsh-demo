@@ -62,7 +62,7 @@
         "MorphPlaygroundApp.exe": "MorphPlaygroundApp.re"
       },
       "rawBuildConfigFooter": [
-        "(env (platformsh (flags (:standard -ccopt -static))))"
+        "(env (platformsh (flags (:standard -ccopt -fPIE -ccopt -static))))"
       ]
     }
   },
