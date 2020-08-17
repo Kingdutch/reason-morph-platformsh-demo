@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "description": "Starter Reason Morph Esy Pesy Project",
   "esy": {
-    "build": "refmterr dune build -p #{self.name}",
+    "build": "dune build -p #{self.name}",
+    "buildDev": "refmterr dune build -p #{self.name}",
     "buildEnv": {
       "ODOC_SYNTAX": "re"
+    },
+    "release": {
+      "bin": [
+        "MorphPlaygroundApp.exe"
+      ],
+      "includePackages": [
+        "root",
+        "@reason-native-web/esy-openssl"
+      ]
     }
   },
   "pesy": {
@@ -84,15 +94,15 @@
     "@opam/uri": "*",
     "@opam/routes": "*",
     "@opam/tyxml-jsx": "*",
-    "@opam/tyxml": "*"
+    "@opam/tyxml": "*",
+    "@pesy/esy-pesy": "0.1.0-alpha.11"
   },
   "devDependencies": {
     "@opam/merlin": "*",
     "@opam/odoc": "*",
-    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam",
-    "@pesy/esy-pesy": "0.1.0-alpha.11"
+    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam"
   },
   "resolutions": {
-    "@opam/zarith": "1.7"
+    "@opam/session": "inhabitedtype/ocaml-session:session.opam#6180413996e8c95bd78a9afa1431349a42c95588"
   }
 }
