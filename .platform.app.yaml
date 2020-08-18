@@ -29,12 +29,6 @@ web:
 # esy requires a lot of disk space in /app/.esy so we provide it.
 disk: 5120
 
-mounts:
-  # Cache local build artifacts
-  '/.esy':
-    source: local
-    source_path: esy
-
 # The hooks that will be performed when the package is deployed.
 hooks:
     # Clear out previous large build artifacts (but not cached dependencies).
@@ -47,10 +41,11 @@ hooks:
     # all needed libraries and we don't require starting esy which causes issues.
     build: |
         set -e
-        rm -rf /app/.esy/3/b
+        export ESY__PREFIX=$PLATFORM_CACHE_DIR/.esy
+        rm -rf $ESY__PREFIX/3/b
         rm -rf "_release"
         rm -f .build_killswitch
-        while [ ! -f "_release/bin/MorphPlaygroundApp.exe" ] && [ ! -f ".build_killswitch" ]; do sleep 1; for s in ~/.esy/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
+        while [ ! -f "_release/bin/MorphPlaygroundApp.exe" ] && [ ! -f ".build_killswitch" ]; do sleep 1; for s in $ESY__PREFIX/3/b/*; do [ "$(echo $s* | tr " " "\n" | wc -l)" -eq "3" ] && echo Removing $s* && rm -rf $s*; done; done &
         esy install
         esy release || (echo $? > .build_killswitch && exit $(cat .build_killswitch))
         cd _release
