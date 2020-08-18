@@ -34,10 +34,6 @@ mounts:
   '/.esy':
     source: local
     source_path: esy
-  # Make esy home folder writable so the app can start
-  "_esy":
-    source: local
-    source_path: esy_home
 
 # The hooks that will be performed when the package is deployed.
 hooks:

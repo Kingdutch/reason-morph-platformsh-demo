@@ -75,7 +75,7 @@
     }
   },
   "scripts": {
-    "start": "esy x MorphPlaygroundApp.exe",
+    "start": "esy \"#{ self.bin / 'MorphPlaygroundApp.exe'}\"",
     "test": "esy x RunMorphPlaygroundTests.exe",
     "format": "dune build @fmt --auto-promote --root .",
     "doc": "esy dune build @doc",
