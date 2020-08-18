@@ -9,7 +9,7 @@ let graphiql_handler = _ =>
 
 let get_routes =
   Routes.[
-    empty @--> (_ => Morph.Response.text("Hello world!") |> Lwt.return),
+    empty @--> (_ => Morph.Response.text("Hello Platform.sh!") |> Lwt.return),
     s("graphql") /? nil @--> graphiql_handler,
   ];
 
